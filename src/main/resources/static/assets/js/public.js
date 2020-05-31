@@ -1,0 +1,138 @@
+var url = "";//网络请求地址
+var page = {nowPage:0,countNum:5,pageSum:0,countSum:0};//定义分页对象
+var account = null;
+$(document).ready(function(){
+	setLoginInfo();
+})
+
+function setLoginInfo(){
+	$.ajax({
+		url: url+"/login/getLoginUser",
+		type:"post",
+		dataType: 'json',
+		success: function(res){
+			if(res.request == "SUCCESS"){
+				$("#topAccount").html(res.user.account);
+				$("#topJurisdiction").html(res.user.jurisdictionName);
+			}else{
+				console.log(res)
+			}
+		},
+		error:function(res){
+			window.location.href = "../pages/404.html";
+		}
+	 });
+}
+
+
+/**
+ * @param {Object} page
+ * 根据page对象创建页码列表
+ */
+function loadPageList(page){
+	$("#pageList").empty();
+	//当前页码是否为第一页
+	if(page.nowPage > 1){
+		var li = $('<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadTable('+(page.nowPage-1)+')">上一页</a></li>');
+	}else{
+		var li = $('<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadTable(1)">上一页</a></li>');
+	}
+	$("#pageList").append(li);
+	
+	//总页码是否大于5页
+	if(page.pageSum > 5){
+		var m = 2;//基数
+		if(page.nowPage < 3){
+			m = page.nowPage-1;
+		}
+		if(page.nowPage + 2 > page.pageSum){
+			m = 3;
+		}
+		if(page.nowPage + 1 > page.pageSum){
+			m = 4;
+		}
+		for(var i = 0; i < 5; i++){
+			var a = $("<a class='page-link' href='javascript:void(0)' onclick='loadTable("+(page.nowPage-m+i)+")'></a>").html(page.nowPage-m+i);
+			if(page.nowPage-m+i == page.nowPage){
+				var li = $("<li class='page-item active'></li>").append(a);
+			}else{
+				var li = $("<li class='page-item'></li>").append(a);
+			}
+			$("#pageList").append(li);
+		}
+	}else{
+		for(var i = 1; i <= page.pageSum; i++){
+			var a = $("<a class='page-link'href='javascript:void(0)' onclick='loadTable("+i+")'></a>").html(i);
+			if(page.nowPage == i){
+				var li = $("<li class='page-item active'></li>").append(a);
+			}else{
+				var li = $("<li class='page-item'></li>").append(a);
+			}
+			$("#pageList").append(li);
+		}
+	}
+	
+	//当前页码是否为最后一页
+	if(page.nowPage != page.pageSum){
+		var li = $('<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadTable('+(page.nowPage+1)+')">下一页</a></li>');
+	}else{
+		var li = $('<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadTable('+page.pageSum+')">下一页</a></li>');
+	}
+	$("#pageList").append(li);
+
+}
+/**
+ * @param {Object} input
+ * 判断是否为数字
+ */
+function checkRate(nubmer) {
+　　var re = /^[1-9]+[0-9]*]*$/ ; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+　　if (!re.test(nubmer)) {
+　　　　return false;
+　　}else{
+		return true;
+	}
+}
+function checkFloat(nubmer){
+	var re = /^(([^0][0-9]+|0)\.([0-9]{1,2})$)|^[1-9]+[0-9]*]*$/ ; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+	　　if (!re.test(nubmer)) {
+	　　　　return false;
+	　　}else{
+			return true;
+		}
+}
+
+/**
+ * @param {Object} queryName
+ * 根据queryName获取参数值
+ */
+function GetQueryValue(queryName) {
+	  var query = decodeURI(window.location.search.substring(1));
+	  var vars = query.split("&");
+	 for (var i = 0; i < vars.length; i++) {
+	   var pair = vars[i].split("=");
+		 if (pair[0] == queryName) { return pair[1]; }
+	 }
+	 return null;
+ }
+
+/**
+ * 退出登录
+ */
+function  quit() {
+	$.ajax({
+		url: url+"/login/userQuit",
+		type:"post",
+		dataType: 'json',
+		success: function(res){
+			if(res.request == "SUCCESS"){
+				window.location.href = "../pages/login.html";
+			}else{
+				console.log(res)
+			}
+		},
+		error:function(res){
+			window.location.href = "../pages/404.html";
+		}
+	});
+ }
