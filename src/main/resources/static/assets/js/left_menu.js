@@ -1,3 +1,34 @@
+$(document).ready(function(){
+    var time = setInterval(function () {
+        console.log(user)
+        if(user != null){
+            //判断是否是供货商
+            if(user.jurisdiction != 3){
+                showAdmin();
+            }else {
+                hideAdmin()
+            }
+            clearInterval(time);
+        }
+    },500);
+
+});
+
+/**
+ * 显示管理员选项
+ */
+function showAdmin(){
+    $("[data_jurisdiction='admini']").show();
+
+   // console.log(juris)
+}
+/**
+ * 隐藏管理员选项
+ */
+function hideAdmin(){
+    $("[data_jurisdiction='admini']").hide();
+}
+
 document.writeln(" <!-- ============================================================== -->");
 document.writeln("        <!-- left sidebar -->");
 document.writeln("        <!-- ============================================================== -->");
@@ -20,12 +51,9 @@ document.writeln("                                    <ul class=\'nav flex-colum
 document.writeln("                                        <li class=\'nav-item\'>");
 document.writeln("                                            <a class=\'nav-link\' href=\'../pages/commodity.html\'>商品信息</a>");
 document.writeln("                                        </li>");
-document.writeln("                                        <li class=\'nav-item\'>");
+document.writeln("                                        <li class=\'nav-item\' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("                                            <a class=\'nav-link\' href=\'../pages/commodityType.html\'>商品分类</a>");
 document.writeln("                                        </li>");
-// document.writeln("                                        <li class=\'nav-item\'>");
-// document.writeln("                                            <a class=\'nav-link\' href=\'../pages/commodityManagement.html\'>商品管理</a>");
-// document.writeln("                                        </li>");
 document.writeln("                                    </ul>");
 document.writeln("                                </div>");
 document.writeln("                            </li>");
@@ -40,17 +68,17 @@ document.writeln("                                        </li>");
 document.writeln("                                        <li class=\'nav-item\'>");
 document.writeln("                                            <a class=\'nav-link\' href=\'../pages/warehousingAdd.html\'>入库订单添加</a>");
 document.writeln("                                        </li>");
-document.writeln("                                        <li class=\'nav-item\'>");
+document.writeln("                                        <li class=\'nav-item\' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("                                            <a class=\'nav-link\' href=\'../pages/OutOrder.html\'>出库订单</a>");
 document.writeln("                                        </li>");
-document.writeln("										<li class=\'nav-item\'>");
+document.writeln("										<li class=\'nav-item\' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("										    <a class=\'nav-link\' href=\'../pages/warehousingOut.html\'>出库订单添加</a>");
 document.writeln("										</li>");
 document.writeln("                                    </ul>");
 document.writeln("                                </div>");
 document.writeln("                            </li>");
 
-document.writeln("                            <li class=\'nav-item \'>");
+document.writeln("                            <li class=\'nav-item \' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("                                <a class=\'nav-link active\' href=\'#\' data-toggle=\'collapse\' aria-expanded=\'false\' data-target=\'#submenu-3\' aria-controls=\'submenu-1\'><i class=\'fas fa-server\'></i>供货商管理 <span class=\'badge badge-success\'>6</span></a>");
 document.writeln("                                <div id=\'submenu-3\' class=\'collapse submenu\' style=\'\'>");
 document.writeln("                                    <ul class=\'nav flex-column\'>");
@@ -67,7 +95,7 @@ document.writeln("                                    </ul>");
 document.writeln("                                </div>");
 document.writeln("                            </li>");
 
-document.writeln("                            <li class=\'nav-item \'>");
+document.writeln("                            <li class=\'nav-item \' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("                                <a class=\'nav-link active\' href=\'#\' data-toggle=\'collapse\' aria-expanded=\'false\' data-target=\'#submenu-4\' aria-controls=\'submenu-1\'><i class=\'fas fa-donate\'></i>资金管理 <span class=\'badge badge-success\'>6</span></a>");
 document.writeln("                                <div id=\'submenu-4\' class=\'collapse submenu\' style=\'\'>");
 document.writeln("                                    <ul class=\'nav flex-column\'>");
@@ -81,7 +109,7 @@ document.writeln("                                    </ul>");
 document.writeln("                                </div>");
 document.writeln("                            </li>");
 
-document.writeln("                            <li class=\'nav-item \'>");
+document.writeln("                            <li class=\'nav-item \' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("                                <a class=\'nav-link active\' href=\'#\' data-toggle=\'collapse\' aria-expanded=\'false\' data-target=\'#submenu-5\' aria-controls=\'submenu-1\'><i class=\'fas fa-user\'></i>用户管理 <span class=\'badge badge-success\'>6</span></a>");
 document.writeln("                                <div id=\'submenu-5\' class=\'collapse submenu\' style=\'\'>");
 document.writeln("                                    <ul class=\'nav flex-column\'>");

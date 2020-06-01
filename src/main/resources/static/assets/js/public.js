@@ -1,6 +1,6 @@
 var url = "";//网络请求地址
 var page = {nowPage:0,countNum:5,pageSum:0,countSum:0};//定义分页对象
-var account = null;
+var user = null;
 $(document).ready(function(){
 	setLoginInfo();
 })
@@ -12,10 +12,11 @@ function setLoginInfo(){
 		dataType: 'json',
 		success: function(res){
 			if(res.request == "SUCCESS"){
+				user = res.user;
 				$("#topAccount").html(res.user.account);
 				$("#topJurisdiction").html(res.user.jurisdictionName);
 			}else{
-				console.log(res)
+				console.log(res);
 			}
 		},
 		error:function(res){

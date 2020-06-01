@@ -11,6 +11,19 @@ $(document).ready(function(){
 		loadTable();
 	}
 });
+/**
+ * 显示管理员选项
+ */
+function showAdmin(){
+	$("[data_jurisdiction='admini']").css("display","show");
+}
+/**
+ * 隐藏管理员选项
+ */
+function hideAdmin(){
+	$("[data_jurisdiction='admini']").css("display","none");
+}
+
 
 /**
  * @param {Object} nowPage 需要加载页码
