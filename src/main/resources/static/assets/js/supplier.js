@@ -95,13 +95,3 @@ function loadModal(data){
 	$('#detailModal').modal('show');
 }
 
-
-
-
-/**
- * 隐藏模态框
- */
-function closeModal(){
-	$('#detailModal').modal('hidden');
-}
- 

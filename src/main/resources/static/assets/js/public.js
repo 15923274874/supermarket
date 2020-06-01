@@ -170,6 +170,6 @@ function  updatePassWord() {
 		showInfoModel("两次密码不一致");
 		return;
 	}
-    console.log("newpassword"+newPassWord)
+    console.log("newpassword"+newPassWord);
 
 }
