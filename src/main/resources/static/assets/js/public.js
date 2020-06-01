@@ -136,3 +136,40 @@ function  quit() {
 		}
 	});
  }
+
+
+/**
+ * @param {Object} info传入消息
+ * 打开消息提示框
+ */
+function showInfoModel(info){
+	$("#infoModal_info").html(info);
+	$('#infoModal').modal('show');
+}
+
+/**
+ * 密码修改
+ */
+function  updatePassWord() {
+	var old = $("#oldPassWord").val();
+	var newPassWord=$("#newPassWord").val();
+	var newPassWord2=$("#newPassWord2").val();
+    if(old == ""){
+		showInfoModel("请输入旧密码");
+		return;
+	}
+	if(newPassWord == ""){
+		showInfoModel("请输入新密码");
+		return;
+	}
+	if(newPassWord2 == ""){
+		showInfoModel("请确认新密码");
+		return;
+	}
+	if(newPassWord != newPassWord2){
+		showInfoModel("两次密码不一致");
+		return;
+	}
+    console.log("newpassword"+newPassWord)
+
+}

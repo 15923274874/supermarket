@@ -261,12 +261,4 @@ function okDel(){
 	 });
 }
 
-/**
- * @param {Object} info传入消息
- * 打开消息提示框
- */
-function showInfoModel(info){
-	$("#infoModal_info").html(info);
-	$('#infoModal').modal('show');
-}
 
