@@ -44,7 +44,7 @@ public interface UserDao {
     public List<User> getAllUserByPage(Integer page, Integer size);
 
     /**
-     * 根据id获取商品信息
+     * 根据id获取用户信息
      * @param id
      * @return
      */
@@ -83,7 +83,13 @@ public interface UserDao {
     @Update("update user set jurisdiction=#{jurisdiction},jurisdictionName=#{jurisdictionName},supplierId=#{supplierId} where id=#{id}")
     public void update(User user);
 
-
+    /**
+     * 根据id修改密码
+     * @param passWord
+     *  @param id
+     */
+    @Update("update user set passWord=#{passWord} where id=#{id}")
+    public void updatePassWord(String passWord,Integer id);
 
     /**
      * 查找账号是否已经存在
@@ -91,6 +97,13 @@ public interface UserDao {
      */
     @Select("SELECT COUNT(*) FROM user where account=#{account}")
     public Integer getUserByAccount(String account);
+
+    /**
+     * 查找旧密码是否真诚
+     * @param oldPassWord
+     */
+    @Select("SELECT COUNT(*) FROM user where passWord=#{oldPassWord} and id=#{id}")
+    public Integer getUserByOldPassWord(String oldPassWord,Integer id);
     /**
      * 根据user插入数据
      * @param user

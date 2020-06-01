@@ -170,6 +170,26 @@ function  updatePassWord() {
 		showInfoModel("两次密码不一致");
 		return;
 	}
-    console.log("newpassword"+newPassWord);
+	$.ajax({
+		url: url+"/user/updatePassword",
+		type:"post",
+		dataType: 'json',
+		data:{
+			oldPassWord:old,
+			newPassWord:newPassWord
+		},
+		success: function(res){
+			if(res.request == "SUCCESS"){
+				showInfoModel(res.info);
+				$('#updatePasswordModal').modal('hide');
+				setTimeout(function(){ quit() }, 3000);
+			}else{
+				showInfoModel(res.info);
+			}
+		},
+		error:function(res){
+			window.location.href = "../pages/404.html";
+		}
+	});
 
 }

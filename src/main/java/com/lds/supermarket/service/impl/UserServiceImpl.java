@@ -17,6 +17,24 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
+    public Map<String, String> updatePassWord(String oldPassWord,String newPassWord, Integer id) {
+        Map<String, String> map = new HashMap<>();
+       if(userDao.getUserByOldPassWord(oldPassWord,id) > 0){
+           userDao.updatePassWord(newPassWord,id);
+           map.put("info","密码修改成功,请重新登录");
+           map.put("code","1");
+           map.put("request","SUCCESS");
+       }else {
+           map.put("info","旧密码错误");
+           map.put("code","-1");
+           map.put("request","ERROR");
+       }
+
+
+        return map;
+    }
+
+    @Override
     public Page<User> getAllUser() {
 
         Page<User> page = new Page<User>();

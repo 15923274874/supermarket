@@ -51,4 +51,13 @@ public interface UserService {
      */
     public boolean del(Integer id);
 
+    /**
+     * 根据id修改密码
+     * @param oldPassWord
+     * @param newPassWord
+     * @param id
+     * @return
+     */
+    public  Map<String, String> updatePassWord(String oldPassWord,String newPassWord,Integer id);
+
 }

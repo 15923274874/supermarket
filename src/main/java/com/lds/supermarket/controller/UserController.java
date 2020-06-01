@@ -4,12 +4,14 @@ import com.lds.supermarket.entity.Commodity;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.CommodityService;
+import com.lds.supermarket.service.LoginService;
 import com.lds.supermarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LoginService loginService;
     /**
      * 获取供货商信息
      * nowPage:查询页码
@@ -80,6 +85,29 @@ public class UserController {
         }else {
             map.put("code",-1);
             map.put("request","ERROR");
+        }
+        return  map;
+    }
+
+    /**
+     * 修改密码
+     * @param oldPassWord
+     * @param newPassWord
+     * @return
+     */
+    @RequestMapping("/updatePassword")
+    public Map<String,Object> updatePassword(HttpSession session, String oldPassWord, String newPassWord){
+        Map<String,Object> map = new HashMap<String,Object>();
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            map.put("code",-1);
+            map.put("request","ERROR");
+            map.put("info","请先登录！");
+        }else {
+            Map<String,String > infoMap = userService.updatePassWord(oldPassWord,newPassWord,user.getId());
+            map.put("info",infoMap.get("info"));
+            map.put("code",infoMap.get("code"));
+            map.put("request",infoMap.get("request"));
         }
         return  map;
     }
