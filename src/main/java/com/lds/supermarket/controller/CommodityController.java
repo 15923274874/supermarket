@@ -3,6 +3,7 @@ package com.lds.supermarket.controller;
 import com.lds.supermarket.entity.Commodity;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
+import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.CommodityService;
 import com.lds.supermarket.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public class CommodityController {
 
     @Autowired
     private CommodityService commodityService;
+
     /**
      * 获取供货商信息
      * nowPage:查询页码
@@ -29,16 +32,18 @@ public class CommodityController {
      * @return
      */
     @RequestMapping("/getAllCommodity")
-    public Map<String,Object> getAllCommodity(Integer nowPage,Integer size){
+    public Map<String,Object> getAllCommodity(HttpSession session, Integer nowPage, Integer size){
         Map<String,Object> map = new HashMap<String,Object>();
+        User user = (User) session.getAttribute("user");
         Page<Commodity> page = null;
         map.put("code",1);
         map.put("request","SUCCESS");
         if(nowPage == null || size == null){
-            page = commodityService.getAllCommodity();
+            page = commodityService.getAllCommodity(user);
         }else {
-            page = commodityService.getAllCommodity(nowPage,size);
+            page = commodityService.getAllCommodity(nowPage,size,user);
         }
+
         map.put("result",page);
         return map;
     }

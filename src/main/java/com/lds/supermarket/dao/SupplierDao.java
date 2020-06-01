@@ -15,14 +15,6 @@ public interface SupplierDao {
      * @return
      */
     @Select("SELECT * FROM supplier")
-//    @Results({
-//            @Result(column="id",property="id",id=true),
-//            @Result(
-//                    property = "commodityList",
-//                    column = "id",
-//                    many = @Many(select = "com.lds.supermarket.dao.CommodityDao.getCommodityById")
-//            )
-//    })
     public List<Supplier> getAllSupplier();
 
     /**
@@ -34,14 +26,6 @@ public interface SupplierDao {
      * @return
      */
     @Select("SELECT * FROM supplier limit #{page},#{size}")
-//    @Results({
-//            @Result(column="id",property="id",id=true),
-//            @Result(
-//                    property = "commodityList",
-//                    column = "id",
-//                    many = @Many(select = "com.lds.supermarket.dao.CommodityDao.getCommodityById")
-//            )
-//    })
     public List<Supplier> getAllSupplierByPage(Integer page,Integer size);
 
     /**
@@ -50,14 +34,6 @@ public interface SupplierDao {
      * @return
      */
     @Select("SELECT * FROM supplier where id=#{id}")
-//    @Results({
-//            @Result(column="id",property="id",id=true),
-//            @Result(
-//                    property = "commodityList",
-//                    column = "id",
-//                    many = @Many(select = "com.lds.supermarket.dao.CommodityDao.getCommodityById")
-//            )
-//    })
     public Supplier getSupplierById(Integer id);
 
 

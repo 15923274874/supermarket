@@ -5,6 +5,7 @@ import com.lds.supermarket.dao.SupplierDao;
 import com.lds.supermarket.entity.Commodity;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
+import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.CommodityService;
 import com.lds.supermarket.service.SupplierService;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,24 @@ public class CommodityServiceImpl implements CommodityService {
     private CommodityDao commodityDao;
 
     @Override
-    public Page<Commodity> getAllCommodity() {
+    public Page<Commodity> getAllCommodity(User user) {
 
         Page<Commodity> page = new Page<Commodity>();
         page.setCountSum(commodityDao.getCommodityCount());//设置总记录条数
         page.setNowPage(1);//设置当前页码
         page.setCountNum(page.getCountSum());//设置显示记录条数
         page.setPageSum();//设置总页码
+        if(user.getJurisdiction() < 3){
+            page.setList(commodityDao.getAllCommodity());
+        }else {
+            page.setList(commodityDao.getAllCommodityBySupplierId(user.getSupplierId()));
+        }
 
-        page.setList(commodityDao.getAllCommodity());
         return page;
     }
 
     @Override
-    public Page<Commodity> getAllCommodity(Integer nowPage, Integer size) {
+    public Page<Commodity> getAllCommodity(Integer nowPage, Integer size,User user) {
 
         Page<Commodity> page = new Page<Commodity>();
         page.setCountSum(commodityDao.getCommodityCount());//设置总记录条数
@@ -39,7 +44,13 @@ public class CommodityServiceImpl implements CommodityService {
         page.setCountNum(size);//设置显示记录条数
         page.setPageSum();//设置总页码
         Integer countStart = (page.getNowPage()-1) * size;//设置开始查询记录数
-        page.setList(commodityDao.getAllCommodityByPage(countStart,size));
+
+        if(user.getJurisdiction() < 3){
+            page.setList(commodityDao.getAllCommodityByPage(countStart,size));
+        }else {
+            page.setList(commodityDao.getAllCommodityByPageAndSupplierId(countStart,size,user.getSupplierId()));
+        }
+
         return page;
     }
 

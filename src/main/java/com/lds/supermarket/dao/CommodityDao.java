@@ -32,6 +32,27 @@ public interface CommodityDao {
     public List<Commodity> getAllCommodity();
 
     /**
+     * 获取全部供应商所属商品信息
+     * @return
+     */
+    @Select("SELECT * FROM commodity where supplierId=#{supplierId}")
+    @Results({
+            @Result(column="supplierId",property="supplierId"),
+            @Result(
+                    property = "supplier",
+                    column = "supplierId",
+                    one = @One(select = "com.lds.supermarket.dao.SupplierDao.getSupplierById")
+            ),
+            @Result(column="typeId",property="typeId"),
+            @Result(
+                    property = "commodityType",
+                    column = "typeId",
+                    one = @One(select = "com.lds.supermarket.dao.CommodityTypeDao.getCommodityTypeById")
+            )
+    })
+    public List<Commodity> getAllCommodityBySupplierId(Integer supplierId);
+
+    /**
      * 根据分页信息获取相应数据
      * page:开始记录序号
      * size:记录条数
@@ -55,6 +76,31 @@ public interface CommodityDao {
             )
     })
     public List<Commodity> getAllCommodityByPage(Integer page,Integer size);
+
+    /**
+     * 根据分页信息获取相应数据
+     * @param supplierId 供应商id
+     * @param page 开始记录序号
+     * @param size 记录条数
+     * @return
+     */
+    @Select("SELECT * FROM commodity where supplierId=#{supplierId} limit #{page},#{size}")
+    @Results({
+            @Result(column="supplierId",property="supplierId"),
+            @Result(
+                    property = "supplier",
+                    column = "supplierId",
+                    one = @One(select = "com.lds.supermarket.dao.SupplierDao.getSupplierById")
+            ),
+            @Result(column="typeId",property="typeId"),
+            @Result(
+                    property = "commodityType",
+                    column = "typeId",
+                    one = @One(select = "com.lds.supermarket.dao.CommodityTypeDao.getCommodityTypeById")
+            )
+    })
+    public List<Commodity> getAllCommodityByPageAndSupplierId(Integer page,Integer size,Integer supplierId);
+
 
     /**
      * 根据id获取商品信息

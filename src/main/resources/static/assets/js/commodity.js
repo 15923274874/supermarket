@@ -84,7 +84,7 @@ function showModal(commodityId){
 	 });
 	
 	/**
-	 * 加载公司列表
+	 * 加载供应商列表
 	 */
 	$.ajax({
 		url: url+"/supplier/getAllSupplier", 

@@ -3,11 +3,13 @@ package com.lds.supermarket.service.impl;
 import com.lds.supermarket.dao.SupplierDao;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
+import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,20 +19,26 @@ public class SuppliserServiceImpl implements SupplierService {
     private SupplierDao supplierDao;
 
     @Override
-    public Page<Supplier> getAllSupplier() {
+    public Page<Supplier> getAllSupplier(User user) {
 
         Page<Supplier> page = new Page<Supplier>();
         page.setCountSum(supplierDao.getSupplierCount());//设置总记录条数
         page.setNowPage(1);//设置当前页码
         page.setCountNum(page.getCountSum());//设置显示记录条数
         page.setPageSum();//设置总页码
+        if(user.getJurisdiction() < 3){
+            page.setList(supplierDao.getAllSupplier());
+        }else{
+            List<Supplier> list = new ArrayList<>();
+            list.add(supplierDao.getSupplierById(user.getSupplierId()));
+            page.setList(list);
+        }
 
-        page.setList(supplierDao.getAllSupplier());
         return page;
     }
 
     @Override
-    public Page<Supplier> getAllSupplier(Integer nowPage, Integer size) {
+    public Page<Supplier> getAllSupplier(Integer nowPage, Integer size,User user) {
 
         Page<Supplier> page = new Page<Supplier>();
         page.setCountSum(supplierDao.getSupplierCount());//设置总记录条数
@@ -38,7 +46,13 @@ public class SuppliserServiceImpl implements SupplierService {
         page.setCountNum(size);//设置显示记录条数
         page.setPageSum();//设置总页码
         Integer countStart = (page.getNowPage()-1) * size;//设置开始查询记录数
-        page.setList(supplierDao.getAllSupplierByPage(countStart,size));
+        if(user.getJurisdiction() < 3){
+            page.setList(supplierDao.getAllSupplierByPage(countStart,size));
+        }else{
+            List<Supplier> list = new ArrayList<>();
+            list.add(supplierDao.getSupplierById(user.getSupplierId()));
+            page.setList(list);
+        }
         return page;
     }
 

@@ -2,6 +2,7 @@ package com.lds.supermarket.controller;
 
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
+import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +31,16 @@ public class SupplierController {
      * @return
      */
     @RequestMapping("/getAllSupplier")
-    public Map<String,Object> getAllSupplier(Integer nowPage,Integer size){
+    public Map<String,Object> getAllSupplier(HttpSession session, Integer nowPage, Integer size){
         Map<String,Object> map = new HashMap<String,Object>();
+        User user = (User) session.getAttribute("user");
         Page<Supplier> page = null;
         map.put("code",1);
         map.put("request","SUCCESS");
         if(nowPage == null || size == null){
-            page = supplierService.getAllSupplier();
+            page = supplierService.getAllSupplier(user);
         }else {
-            page = supplierService.getAllSupplier(nowPage,size);
+            page = supplierService.getAllSupplier(nowPage,size,user);
         }
         map.put("result",page);
         return map;

@@ -2,6 +2,7 @@ package com.lds.supermarket.service;
 
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
+import com.lds.supermarket.entity.User;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface SupplierService {
      * 获取全部供应商信息
      * @return
      */
-    public Page<Supplier> getAllSupplier();
+    public Page<Supplier> getAllSupplier(User user);
 
     /**
      * 根据分页信息获取相应数据
@@ -21,7 +22,7 @@ public interface SupplierService {
      * @param size
      * @return
      */
-    public Page<Supplier> getAllSupplier(Integer nowPage,Integer size);
+    public Page<Supplier> getAllSupplier(Integer nowPage,Integer size,User user);
 
 
     /**
