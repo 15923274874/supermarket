@@ -80,7 +80,8 @@ public interface UserDao {
      * 根据user对象更新数据
      * @param user
      */
-    @Update("update user set jurisdiction=#{jurisdiction},jurisdictionName=#{jurisdictionName},supplierId=#{supplierId} where id=#{id}")
+    @Update("update user set jurisdiction=#{jurisdiction},jurisdictionName=#{jurisdictionName}," +
+            "supplierId=#{supplierId},,email=#{email},,iconName=#{iconName} where id=#{id}")
     public void update(User user);
 
     /**
@@ -90,6 +91,14 @@ public interface UserDao {
      */
     @Update("update user set passWord=#{passWord} where id=#{id}")
     public void updatePassWord(String passWord,Integer id);
+
+    /**
+     * 根据id修改头像
+     * @param iconName
+     *  @param id
+     */
+    @Update("update user set iconName=#{iconName} where id=#{id}")
+    public void updateIconName(String iconName,Integer id);
 
     /**
      * 查找账号是否已经存在
@@ -108,8 +117,8 @@ public interface UserDao {
      * 根据user插入数据
      * @param user
      */
-    @Insert("insert into user(account,passWord,jurisdiction,jurisdictionName,supplierId) " +
-            "values(#{account},#{passWord},#{jurisdiction},#{jurisdictionName},#{supplierId})")
+    @Insert("insert into user(account,passWord,jurisdiction,jurisdictionName,supplierId,email,iconName) " +
+            "values(#{account},#{passWord},#{jurisdiction},#{jurisdictionName},#{supplierId},#{email},#{iconName})")
     public void insert(User user);
 
     /**

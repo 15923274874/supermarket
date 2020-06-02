@@ -60,4 +60,12 @@ public interface UserService {
      */
     public  Map<String, String> updatePassWord(String oldPassWord,String newPassWord,Integer id);
 
+    /**
+     * 根据id修改头像
+     * @param iconName
+     * @param id
+     * @return
+     */
+    public  Map<String, String> updateIcon(String iconName,Integer id);
+
 }

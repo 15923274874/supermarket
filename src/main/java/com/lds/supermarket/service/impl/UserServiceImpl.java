@@ -35,6 +35,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, String> updateIcon(String iconName, Integer id) {
+        Map<String, String> map = new HashMap<>();
+        userDao.updateIconName(iconName,id);
+        map.put("info","密码修改成功,请重新登录");
+        map.put("code","1");
+        map.put("request","SUCCESS");
+        return map;
+    }
+
+    @Override
     public Page<User> getAllUser() {
 
         Page<User> page = new Page<User>();

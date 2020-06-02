@@ -5,9 +5,70 @@ $(document).ready(function(){
 	setLoginInfo();
 })
 
+/**
+ * 打开文件选择框
+ */
 function openFile(){
 	var fileElem = document.getElementById("userIcon");
 	fileElem.click();
+}
+
+/**
+ * 头像选择触发
+ */
+function selectImg() {
+	var userIconBtn = $("#userIcon");
+	$("#iconImg").attr("src",URL.createObjectURL(userIconBtn[0].files[0]));
+}
+
+/**
+ * 保存用户信息
+ */
+function saveUserInfo() {
+	var formData = new FormData();
+	formData.append('file', $('#userIcon')[0].files[0]);
+	$.ajax({
+		url: '/user/iconUpload',
+		type: 'POST',
+		cache: false,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(res){
+			if(res.result == "success"){
+				showInfoModel(res.msg);
+			}else{
+				showInfoModel(res.msg);
+			}
+		},
+		error:function(res){
+		}
+	});
+}
+
+/**
+ * 保存用户信息
+ */
+function saveUserInfo() {
+	var formData = new FormData();
+	formData.append('file', $('#userIcon')[0].files[0]);
+	$.ajax({
+		url: '/user/iconUpload',
+		type: 'POST',
+		cache: false,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(res){
+			if(res.result == "success"){
+				showInfoModel(res.msg);
+			}else{
+				showInfoModel(res.msg);
+			}
+		},
+		error:function(res){
+		}
+	});
 }
 
 function setLoginInfo(){
@@ -20,6 +81,8 @@ function setLoginInfo(){
 				user = res.user;
 				$("#topAccount").html(res.user.account);
 				$("#topJurisdiction").html(res.user.jurisdictionName);
+				$("#icon").attr("src",res.user.iconName);
+				$("#iconImg").attr("src",res.user.iconName);
 			}else{
 				console.log(res);
 			}

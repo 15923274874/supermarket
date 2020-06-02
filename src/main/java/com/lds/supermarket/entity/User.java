@@ -8,6 +8,7 @@ public class User {
     private String jurisdictionName;//权限等级
     private Integer supplierId;//如果是供货商，绑定的id
     private Supplier supplier;
+    private String iconName;//头像名
 
     @Override
     public String toString() {
@@ -19,8 +20,24 @@ public class User {
                 ", jurisdictionName='" + jurisdictionName + '\'' +
                 ", supplierId=" + supplierId +
                 ", supplier=" + supplier +
+                ", iconName='" + iconName + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIconName() {
+        return iconName;
+    }
+
+    public void setIconName(String iconName) {
+        this.iconName = iconName;
+    }
+
+    private String email;//邮箱
 
     public Integer getId() {
         return id;
