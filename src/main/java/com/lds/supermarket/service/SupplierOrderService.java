@@ -3,6 +3,7 @@ package com.lds.supermarket.service;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
 import com.lds.supermarket.entity.SupplierOrder;
+import com.lds.supermarket.entity.User;
 
 public interface SupplierOrderService {
 
@@ -10,7 +11,7 @@ public interface SupplierOrderService {
      * 获取全部供应商订单
      * @return
      */
-    public Page<SupplierOrder> getAllSupplierOrder();
+    public Page<SupplierOrder> getAllSupplierOrder(User user);
 
     /**
      * 根据分页信息获取相应数据
@@ -20,7 +21,7 @@ public interface SupplierOrderService {
      * @param size
      * @return
      */
-    public Page<SupplierOrder> getAllSupplierOrder(Integer nowPage, Integer size);
+    public Page<SupplierOrder> getAllSupplierOrder(User user, Integer nowPage, Integer size);
 
 
     /**

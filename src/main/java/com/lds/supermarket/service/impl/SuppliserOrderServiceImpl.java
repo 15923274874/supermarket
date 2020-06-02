@@ -4,10 +4,7 @@ import com.lds.supermarket.dao.CommodityDao;
 import com.lds.supermarket.dao.SupplierDao;
 import com.lds.supermarket.dao.SupplierOrderDao;
 import com.lds.supermarket.dao.SupplierOrderDetailDao;
-import com.lds.supermarket.entity.Page;
-import com.lds.supermarket.entity.Supplier;
-import com.lds.supermarket.entity.SupplierOrder;
-import com.lds.supermarket.entity.SupplierOrderDetail;
+import com.lds.supermarket.entity.*;
 import com.lds.supermarket.service.SupplierOrderService;
 import com.lds.supermarket.service.SupplierService;
 import org.springframework.stereotype.Service;
@@ -57,19 +54,23 @@ public class SuppliserOrderServiceImpl implements SupplierOrderService {
     }
 
     @Override
-    public Page<SupplierOrder> getAllSupplierOrder() {
+    public Page<SupplierOrder> getAllSupplierOrder(User user) {
 
         Page<SupplierOrder> page = new Page<SupplierOrder>();
         page.setCountSum(supplierOrderDao.getSupplierOrderCount());//设置总记录条数
         page.setNowPage(1);//设置当前页码
         page.setCountNum(page.getCountSum());//设置显示记录条数
         page.setPageSum();//设置总页码
-        page.setList(supplierOrderDao.getAllSupplierOrder());
+        if(user.getJurisdiction() <  3){
+            page.setList(supplierOrderDao.getAllSupplierOrder());
+        }else {
+            page.setList(supplierOrderDao.getAllSupplierOrderBySupplierId(user.getSupplierId()));
+        }
         return page;
     }
 
     @Override
-    public Page<SupplierOrder> getAllSupplierOrder(Integer nowPage, Integer size) {
+    public Page<SupplierOrder> getAllSupplierOrder(User user, Integer nowPage, Integer size) {
 
         Page<SupplierOrder> page = new Page<SupplierOrder>();
         page.setCountSum(supplierOrderDao.getSupplierOrderCount());//设置总记录条数
@@ -77,7 +78,11 @@ public class SuppliserOrderServiceImpl implements SupplierOrderService {
         page.setCountNum(size);//设置显示记录条数
         page.setPageSum();//设置总页码
         Integer countStart = (page.getNowPage()-1) * size;//设置开始查询记录数
-        page.setList(supplierOrderDao.getAllSupplierOrderByPage(countStart,size));
+       if(user.getJurisdiction() < 3){
+           page.setList(supplierOrderDao.getAllSupplierOrderByPage(countStart,size));
+       }else {
+           page.setList(supplierOrderDao.getAllSupplierOrderByPageAndSupplierId(user.getSupplierId(),countStart,size));
+       }
         return page;
     }
 

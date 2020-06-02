@@ -105,9 +105,9 @@ function loadModal(data,supplierOrderId){
 	 if(data != null){
        $("#modal_tbody").empty();;
        for(var i = 0; i < data.length; i++){
-       	var no = $("<th scope=''row'</th>").html(i+1);
+       	var no = $("<th scope='row'></th>").html(i+1);
        	var commodityId = $("<td></td>").html(data[i].commodityId);
-       	var commodityName = $("<td></td>").html(data[i].commodity.commodityName);
+       	var commodityName = $("<td></td>").html(data[i].commodityName);
        	var num = $("<td></td>").html(data[i].num);
        	var commodityPrice = $("<td></td>").html(data[i].price);
        	var sumPrice = $("<td></td>").html(data[i].sumPrice);

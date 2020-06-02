@@ -2,6 +2,7 @@ package com.lds.supermarket.dao;
 
 import com.lds.supermarket.entity.Supplier;
 import com.lds.supermarket.entity.SupplierOrder;
+import com.lds.supermarket.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -25,6 +26,22 @@ public interface SupplierOrderDao {
     public List<SupplierOrder> getAllSupplierOrder();
 
     /**
+     * 获取全部供货商订单
+     * @return
+     */
+    @Select("SELECT * FROM supplierOrder where supplierId=#{supplierId}")
+    @Results({
+            @Result(column="supplierId",property="supplierId"),
+            @Result(
+                    property = "supplier",
+                    column = "supplierId",
+                    one = @One(select = "com.lds.supermarket.dao.SupplierDao.getSupplierById")
+            )
+    })
+    public List<SupplierOrder> getAllSupplierOrderBySupplierId(Integer supplierId);
+
+
+    /**
      * 根据分页信息获取相应数据
      * page:开始记录序号
      * size:记录条数
@@ -42,6 +59,25 @@ public interface SupplierOrderDao {
             )
     })
     public List<SupplierOrder> getAllSupplierOrderByPage(Integer page, Integer size);
+
+    /**
+     * 根据分页信息获取相应数据
+     * page:开始记录序号
+     * size:记录条数
+     * @param page
+     * @param size
+     * @return
+     */
+    @Select("SELECT * FROM supplierOrder where supplierId=#{supplierId} limit #{page},#{size}")
+    @Results({
+            @Result(column="supplierId",property="supplierId"),
+            @Result(
+                    property = "supplier",
+                    column = "supplierId",
+                    one = @One(select = "com.lds.supermarket.dao.SupplierDao.getSupplierById")
+            )
+    })
+    public List<SupplierOrder> getAllSupplierOrderByPageAndSupplierId(Integer supplierId,Integer page, Integer size);
 
     /**
      * 根据id获取供货商信息

@@ -3,6 +3,7 @@ package com.lds.supermarket.controller;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.Supplier;
 import com.lds.supermarket.entity.SupplierOrder;
+import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.SupplierOrderService;
 import com.lds.supermarket.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,15 +31,16 @@ public class SupplierOrderController {
      * @return
      */
     @RequestMapping("/getAllSupplierOrder")
-    public Map<String,Object> getAllSupplier(Integer nowPage,Integer size){
+    public Map<String,Object> getAllSupplier(HttpSession session, Integer nowPage, Integer size){
         Map<String,Object> map = new HashMap<String,Object>();
         Page<SupplierOrder> page = null;
+        User user = (User) session.getAttribute("user");
         map.put("code",1);
         map.put("request","SUCCESS");
         if(nowPage == null || size == null){
-            page = supplierOrderService.getAllSupplierOrder();
+            page = supplierOrderService.getAllSupplierOrder(user);
         }else {
-            page = supplierOrderService.getAllSupplierOrder(nowPage,size);
+            page = supplierOrderService.getAllSupplierOrder(user,nowPage,size);
         }
         map.put("result",page);
         return map;

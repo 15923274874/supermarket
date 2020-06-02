@@ -11,19 +11,6 @@ $(document).ready(function(){
 		loadTable();
 	}
 });
-/**
- * 显示管理员选项
- */
-function showAdmin(){
-	$("[data_jurisdiction='admini']").css("display","show");
-}
-/**
- * 隐藏管理员选项
- */
-function hideAdmin(){
-	$("[data_jurisdiction='admini']").css("display","none");
-}
-
 
 /**
  * @param {Object} nowPage 需要加载页码
@@ -322,7 +309,7 @@ function selectSupplier(e){
  */
 function save(){
 	var dataList = [];
-	console.log()
+	console.log(commodityList)
 	for(var i = 0; i < commodityList.length; i++){
 		var data = {
 			commodityId:commodityList[i].id,
@@ -330,6 +317,7 @@ function save(){
 			price:commodityList[i].price,
 			num:commodityList[i].num,
 			sumPrice:commodityList[i].sumPrice,
+			commodityName:commodityList[i].commodityName,
 			edit:commodityList[i].edit
 		}
 		dataList.push(data);

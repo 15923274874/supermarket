@@ -6,6 +6,7 @@ package com.lds.supermarket.entity;
 public class SupplierOrderDetail {
     private Integer id;//订单详情id
     private Integer commodityId;//所属商品
+    private String commodityName;//所属商品名
     private Integer supplierOrderId;//所属订单id
     private Integer price;//本次单价
     private Integer num;//本次数量
@@ -18,6 +19,7 @@ public class SupplierOrderDetail {
         return "SupplierOrderDetail{" +
                 "id=" + id +
                 ", commodityId=" + commodityId +
+                ", commodityName=" + commodityName +
                 ", supplierOrderId=" + supplierOrderId +
                 ", price=" + price +
                 ", num=" + num +
@@ -89,5 +91,13 @@ public class SupplierOrderDetail {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
     }
 }

@@ -65,7 +65,7 @@ public interface SupplierOrderDetailDao {
      * 根据supplierOrderDetail对象更新数据
      * @param supplierOrderDetail
      */
-    @Update("update supplierOrderDetail set commodityId=#{commodityId},supplierOrderId=#{supplierOrderId}," +
+    @Update("update supplierOrderDetail set commodityId=#{commodityId},commodityName=#{commodityName},supplierOrderId=#{supplierOrderId}," +
             "price=#{price},num=#{num},sumPrice=#{sumPrice}," +
             "edit=#{edit} where id=#{id}")
     public void update(SupplierOrderDetail supplierOrderDetail);
@@ -74,8 +74,8 @@ public interface SupplierOrderDetailDao {
      * 根据supplierOrderDetail插入数据
      * @param supplierOrderDetail
      */
-    @Insert("insert into supplierOrderDetail(commodityId,supplierOrderId,price,num,sumPrice,edit) " +
-            "values(#{commodityId},#{supplierOrderId},#{price},#{num},#{sumPrice},#{edit})")
+    @Insert("insert into supplierOrderDetail(commodityId,commodityName,supplierOrderId,price,num,sumPrice,edit) " +
+            "values(#{commodityId},#{commodityName},#{supplierOrderId},#{price},#{num},#{sumPrice},#{edit})")
     public void insert(SupplierOrderDetail supplierOrderDetail);
 
     /**
