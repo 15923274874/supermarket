@@ -11,3 +11,16 @@
 	line-height: 14px;
 	text-align: left;
 }
+.icon_class{
+	width: 80px;
+	margin: 0 auto;
+}
+.icon_class img{
+	width: 100%;
+}
+.icon_div{
+	text-align: center;
+}
+.icon_div button{
+	margin-top: 10px;
+}

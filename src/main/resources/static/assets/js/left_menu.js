@@ -45,6 +45,10 @@ document.writeln("                            <li class=\'nav-divider\'>");
 document.writeln("                                菜单");
 document.writeln("                            </li>");
 document.writeln("                            <li class=\'nav-item \'>");
+document.writeln("                                <a class=\'nav-link active\' href=\'../index.html\'><i class=\' fas fa-clone\'></i>首页</a>");
+document.writeln("                            </li>");
+
+document.writeln("                            <li class=\'nav-item \'>");
 document.writeln("                                <a class=\'nav-link active\' href=\'#\' data-toggle=\'collapse\' aria-expanded=\'false\' data-target=\'#submenu-1\' aria-controls=\'submenu-1\'><i class=\'fas fa-archive\'></i>商品管理 <span class=\'badge badge-success\'>6</span></a>");
 document.writeln("                                <div id=\'submenu-1\' class=\'collapse submenu\' style=\'\'>");
 document.writeln("                                    <ul class=\'nav flex-column\'>");

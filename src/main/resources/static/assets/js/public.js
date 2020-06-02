@@ -5,6 +5,11 @@ $(document).ready(function(){
 	setLoginInfo();
 })
 
+function openFile(){
+	var fileElem = document.getElementById("userIcon");
+	fileElem.click();
+}
+
 function setLoginInfo(){
 	$.ajax({
 		url: url+"/login/getLoginUser",
