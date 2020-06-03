@@ -101,6 +101,14 @@ public interface UserDao {
     public void updateIconName(String iconName,Integer id);
 
     /**
+     * 根据id修改头像
+     * @param email
+     *  @param id
+     */
+    @Update("update user set email=#{email} where id=#{id}")
+    public void updateEmail(String email,Integer id);
+
+    /**
      * 查找账号是否已经存在
      * @param account
      */

@@ -86,7 +86,11 @@ function getVerification(e) {
         url: url+"/user/getVerification",
         type:"post",
         dataType: 'json',
+		data:{
+           email:email
+		},
         success: function(res){
+        	console.log(res)
             if(res.request == "SUCCESS"){
                 var i = 59;
                 var time = setInterval(function () {
@@ -113,7 +117,24 @@ function getVerification(e) {
  * 邮箱绑定
  */
 function saveUserEmail() {
-
+    var verification = $("#verification").val();
+    $.ajax({
+        url: url+"/user/saveEmail",
+        type:"post",
+        dataType: 'json',
+        data:{
+			userVerification:verification
+        },
+        success: function(res){
+			showInfoModel(res.msg);
+            if(res.request == "SUCCESS"){
+				$('#emailModal').modal('hide');
+            }
+        },
+        error:function(res){
+            window.location.href = "../pages/404.html";
+        }
+    });
 }
 
 
@@ -133,6 +154,13 @@ function setLoginInfo(){
 				$("#topJurisdiction").html(res.user.jurisdictionName);
 				$("#icon").attr("src",res.user.iconName);
 				$("#iconImg").attr("src",res.user.iconName);
+				if(res.user.email != null){
+					$("#userEmail").val(res.user.email);
+					$("#userEmail").attr("disabled",true);
+					$("#verBtn").css('display','none');
+					$("#verDiv").css('display','none');
+					$("#okVerBtn").css('display','none');
+				}
 			}else{
 				console.log(res);
 			}

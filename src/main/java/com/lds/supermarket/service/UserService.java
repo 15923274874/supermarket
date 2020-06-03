@@ -68,4 +68,12 @@ public interface UserService {
      */
     public  Map<String, String> updateIcon(String iconName,Integer id);
 
+    /**
+     * 根据id绑定邮箱
+     * @param email
+     * @param id
+     * @return
+     */
+    public  Map<String, String> updateEmail(String email,Integer id);
+
 }

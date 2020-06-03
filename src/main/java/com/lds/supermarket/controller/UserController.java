@@ -223,6 +223,7 @@ public class UserController {
         Map<String,Object> map = new HashMap<String,Object>();
         MyUtils utils = new MyUtils();
         Map<String,Object> resultMap = utils.PostVerification(email);
+        System.out.println(resultMap);
         if(resultMap.get("result").equals("SUCCESS")){
             System.out.println(resultMap.get("msg"));
             session.setAttribute("email",resultMap.get("email"));
@@ -231,11 +232,11 @@ public class UserController {
             SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String time=sim.format(dd);
             session.setAttribute("verificationTime",time);
-            map.put("request","success");
+            map.put("request","SUCCESS");
             map.put("msg","验证码发送成功");
         }else {
             System.out.println("验证码发送失败");
-            map.put("request","error");
+            map.put("request","ERROR");
             map.put("msg","验证码发送失败");
         }
         return map;
@@ -251,6 +252,7 @@ public class UserController {
     @RequestMapping("/saveEmail")
     public Map<String,Object>  saveEmail(HttpSession session,String userVerification) throws ParseException {
         Map<String,Object> map = new HashMap<String,Object>();
+        String email = (String) session.getAttribute("email");//获取session中邮箱
         String verification = (String) session.getAttribute("verification");//获取session中验证码
         String time = (String) session.getAttribute("verificationTime");//获取发送验证码的时间
         Date dd=new Date();
@@ -266,12 +268,13 @@ public class UserController {
             long s = diff / 1000;  //获取时间差
             if(s < 10*30){    //判断是否超过10分钟
                 if(userVerification.toLowerCase().equals(verification.toLowerCase())){
-                    System.out.println("邮箱保存成功");
+                    User user = (User) session.getAttribute("user");
+                    userService.updateEmail(email,user.getId());
                     map.put("request","success");
                     map.put("msg","邮箱保存成功");
                 }else{
-                    map.put("request","error");
-                    map.put("msg","验证码错误");
+                    map.put("request","success");
+                    map.put("msg","邮箱保存成功");
                 }
             }else {
                 map.put("request","error");
