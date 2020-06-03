@@ -45,6 +45,13 @@ public interface UserService {
     public User getUserById(Integer id);
 
     /**
+     * 判断账号密码是否匹配
+     * @param account
+     * @return
+     */
+    public User getUserByAccountAndEmail(String account,String email);
+
+    /**
      * 根据id删除数据
      * @param id
      * @return
@@ -59,6 +66,14 @@ public interface UserService {
      * @return
      */
     public  Map<String, String> updatePassWord(String oldPassWord,String newPassWord,Integer id);
+
+    /**
+     * 修改密码
+     * @param newPassWord
+     * @param id
+     * @return
+     */
+    public Map<String, String> registPassWord(String newPassWord,Integer id);
 
     /**
      * 根据id修改头像

@@ -121,6 +121,13 @@ public interface UserDao {
      */
     @Select("SELECT COUNT(*) FROM user where passWord=#{oldPassWord} and id=#{id}")
     public Integer getUserByOldPassWord(String oldPassWord,Integer id);
+
+    /**
+     * 查找账号邮箱是否匹配
+     * @param account
+     */
+    @Select("SELECT * FROM user where account=#{account} and email=#{email}")
+    public User getUserByAcountAndEmail(String account,String email);
     /**
      * 根据user插入数据
      * @param user

@@ -35,6 +35,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, String> registPassWord(String newPassWord, Integer id) {
+        Map<String, String> map = new HashMap<>();
+        userDao.updatePassWord(newPassWord,id);
+        map.put("code","1");
+        map.put("request","SUCCESS");
+        return map;
+    }
+
+    @Override
     public Map<String, String> updateIcon(String iconName, Integer id) {
         Map<String, String> map = new HashMap<>();
         userDao.updateIconName(iconName,id);
@@ -91,6 +100,7 @@ public class UserServiceImpl implements UserService {
                 map.put("info","修改数据成功");
             }else{
                 if(userDao.getUserByAccount(user.getAccount()) == 0){
+                    user.setIconName("userDefaultIcon.jpeg");
                     userDao.insert(user);
                     map.put("request","SUCCESS");
                     map.put("info","添加用户成功，默认密码为"+user.getPassWord());
@@ -126,5 +136,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer id) {
         return userDao.getUserById(id);
+    }
+
+    @Override
+    public User getUserByAccountAndEmail(String account, String email) {
+        return userDao.getUserByAcountAndEmail(account,email);
     }
 }

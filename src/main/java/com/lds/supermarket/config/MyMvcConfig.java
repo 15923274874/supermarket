@@ -31,7 +31,8 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addInterceptor(new LoginHandlerInterceptor())
                         .addPathPatterns("/**")
                         //必须将js、css等静态文件排除，否则会在某些浏览器中无法加载
-                        .excludePathPatterns("/pages/login.html","/assets/**","/login/*");
+                        .excludePathPatterns("/pages/login.html","/assets/**","/login/*",
+                                "/pages/forgotPassword.html","/user/getVerification","/user/fogetPassWord");
             }
         };
         return  adapter;

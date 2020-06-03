@@ -89,6 +89,36 @@
     <script src="assets/js/public.js"></script>
 	<script src="assets/js/nav.js"></script>
     <script src="assets/js/left_menu.js"></script>
+  <script>
+    function setLoginInfo(){
+        $.ajax({
+            url: url+"/login/getLoginUser",
+            type:"post",
+            dataType: 'json',
+            success: function(res){
+                if(res.request == "SUCCESS"){
+                    user = res.user;
+                    $("#topAccount").html(res.user.account);
+                    $("#topJurisdiction").html(res.user.jurisdictionName);
+                    $("#icon").attr("src",res.user.iconName);
+                    $("#iconImg").attr("src",res.user.iconName);
+                    if(res.user.email != null){
+                        $("#userEmail").val(res.user.email);
+                        $("#userEmail").attr("disabled",true);
+                        $("#verBtn").css('display','none');
+                        $("#verDiv").css('display','none');
+                        $("#okVerBtn").css('display','none');
+                    }
+                }else{
+                    console.log(res);
+                }
+            },
+            error:function(res){
+                window.location.href = "../pages/404.html";
+            }
+        });
+    }
+  </script>
 </body>
  
 </html>

@@ -1,7 +1,9 @@
 package com.lds.supermarket.entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -15,8 +17,11 @@ import java.util.regex.Pattern;
  */
 @Component
 public class MyUtils {
-    private String sender = "2812510392@qq.com";//邮件发送弟子
-
+    private String sender = "2812510392@qq.com";//邮件发送地址
+    private JavaMailSender javaMailSender;
+    public MyUtils(JavaMailSender javaMailSender){
+        this.javaMailSender = javaMailSender;
+    }
     /**
      * 验证码发送
      * @return
@@ -37,7 +42,9 @@ public class MyUtils {
             char num = ch[random.nextInt(ch.length)];
             str += num;
         }
-        sendVerification(email,"验证码",str);
+        String title = "超市后台管理系统邮箱绑定";
+        String text = "你的验证码为："+str+",该验证码有效期为:10分钟,输入验证码时不区分大小写，如果不是本人操作，请忽略本次邮件!";
+        sendVerification(email,title,text);
 
         map.put("result","SUCCESS");
         map.put("email",email);
@@ -62,19 +69,18 @@ public class MyUtils {
      * 开始发送验证码
      */
     public boolean sendVerification(String email,String title,String text){
-//        try {
-//            SimpleMailMessage mainMessage = new SimpleMailMessage();
-//            System.out.println("开始邮件发送");
-//            System.out.println("发送方地址为"+sender);
-//            mainMessage.setTo(email);
-//            mainMessage.setFrom(sender);
-//            //发送的标题
-//            mainMessage.setSubject(title);
-//            //发送的内容
-//            mainMessage.setText(text);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+        SimpleMailMessage mailMessage=new SimpleMailMessage();
+        mailMessage.setFrom(sender);
+        mailMessage.setTo(email);
+        mailMessage.setSubject(title);
+        mailMessage.setText(text);
+        try {
+            javaMailSender.send(mailMessage);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("发送邮件失败");
+            return false;
+        }
         return true;
     }
 

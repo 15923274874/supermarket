@@ -152,8 +152,8 @@ function setLoginInfo(){
 				user = res.user;
 				$("#topAccount").html(res.user.account);
 				$("#topJurisdiction").html(res.user.jurisdictionName);
-				$("#icon").attr("src",res.user.iconName);
-				$("#iconImg").attr("src",res.user.iconName);
+				$("#icon").attr("src","../"+res.user.iconName);
+				$("#iconImg").attr("src","../"+res.user.iconName);
 				if(res.user.email != null){
 					$("#userEmail").val(res.user.email);
 					$("#userEmail").attr("disabled",true);

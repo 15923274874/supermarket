@@ -9,6 +9,7 @@ import com.lds.supermarket.service.LoginService;
 import com.lds.supermarket.service.UserService;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+
+    @Autowired
+    private JavaMailSender javaMailSender;//邮箱发送对象
 
     @Autowired
     private LoginService loginService;
@@ -221,11 +226,9 @@ public class UserController {
     @RequestMapping("/getVerification")
     public Map<String,Object>  getVerification(HttpSession session,String email) {
         Map<String,Object> map = new HashMap<String,Object>();
-        MyUtils utils = new MyUtils();
+        MyUtils utils = new MyUtils(javaMailSender);
         Map<String,Object> resultMap = utils.PostVerification(email);
-        System.out.println(resultMap);
         if(resultMap.get("result").equals("SUCCESS")){
-            System.out.println(resultMap.get("msg"));
             session.setAttribute("email",resultMap.get("email"));
             session.setAttribute("verification",resultMap.get("verification"));
             Date dd=new Date();
@@ -283,4 +286,44 @@ public class UserController {
         }
         return map;
     }
+    @RequestMapping("/fogetPassWord")
+    public Map<String,Object>  saveEmail(HttpSession session,String account,String userVerification) throws ParseException {
+        Map<String,Object> map = new HashMap<String,Object>();
+        String email = (String) session.getAttribute("email");//获取session中邮箱
+        String verification = (String) session.getAttribute("verification");//获取session中验证码
+        String time = (String) session.getAttribute("verificationTime");//获取发送验证码的时间
+        Date dd=new Date();
+        SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String newTime=sim.format(dd);//获取当前时间
+        if(verification == null){//如过断开连接
+            map.put("request","error");
+            map.put("msg","请先发送验证码");
+        }else{
+            Date d1 = sim.parse(newTime);
+            Date d2 = sim.parse(time);
+            long diff = d1.getTime() - d2.getTime();//这样得到的差值是毫秒级别
+            long s = diff / 1000;  //获取时间差
+            if(s < 10*30){    //判断是否超过10分钟
+                if(userVerification.toLowerCase().equals(verification.toLowerCase())){
+                    User user =  userService.getUserByAccountAndEmail(account,email);
+                    if(user == null){
+                        map.put("request","error");
+                        map.put("msg","账号或邮箱错误，请检查是否有误!");
+                    }else {
+                        userService.registPassWord("123456",user.getId());
+                        map.put("request","success");
+                        map.put("msg","密码重置成功，默认密码为123456，请尽快修改密码");
+                    }
+                }else{
+                    map.put("request","error");
+                    map.put("msg","验证码错误");
+                }
+            }else {
+                map.put("request","error");
+                map.put("msg","验证码已过期，请重新获取");
+            }
+        }
+        return map;
+    }
+
 }
