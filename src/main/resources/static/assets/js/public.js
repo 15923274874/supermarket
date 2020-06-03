@@ -71,6 +71,56 @@ function saveUserInfo() {
 	});
 }
 
+/**
+ * 发送验证码
+ */
+function getVerification(e) {
+
+	var email = $("#userEmail").val();
+	var emailTest = /^[\w\-\.]+@[a-z0-9]+(\-[a-z0-9]+)?(\.[a-z0-9]+(\-[a-z0-9]+)?)*\.[a-z]{2,4}$/i;
+	if(!emailTest.test(email)){
+		showInfoModel("请输入合法的邮箱地址");
+		return
+	}
+    $.ajax({
+        url: url+"/user/getVerification",
+        type:"post",
+        dataType: 'json',
+        success: function(res){
+            if(res.request == "SUCCESS"){
+                var i = 59;
+                var time = setInterval(function () {
+                    $(e).html(i+"秒后重新发送");
+                    $(e).attr("disabled",true);
+                    i--;
+                    if(i < 0){
+                        $(e).html("发送验证码");
+                        $(e).attr("disabled",false);
+                        clearInterval(time);
+                    }
+                },1000);
+            }else{
+                console.log(res);
+            }
+        },
+        error:function(res){
+            window.location.href = "../pages/404.html";
+        }
+    });
+
+}
+/**
+ * 邮箱绑定
+ */
+function saveUserEmail() {
+
+}
+
+
+
+/**
+ * 导航栏初始化
+ */
 function setLoginInfo(){
 	$.ajax({
 		url: url+"/login/getLoginUser",

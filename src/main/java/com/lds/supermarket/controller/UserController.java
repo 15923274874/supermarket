@@ -1,6 +1,7 @@
 package com.lds.supermarket.controller;
 
 import com.lds.supermarket.entity.Commodity;
+import com.lds.supermarket.entity.MyUtils;
 import com.lds.supermarket.entity.Page;
 import com.lds.supermarket.entity.User;
 import com.lds.supermarket.service.CommodityService;
@@ -18,8 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/user")
@@ -203,6 +208,74 @@ public class UserController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 获取验证码
+     * @return
+     */
+
+    @RequestMapping("/getVerification")
+    public Map<String,Object>  getVerification(HttpSession session,String email) {
+        Map<String,Object> map = new HashMap<String,Object>();
+        MyUtils utils = new MyUtils();
+        Map<String,Object> resultMap = utils.PostVerification(email);
+        if(resultMap.get("result").equals("SUCCESS")){
+            System.out.println(resultMap.get("msg"));
+            session.setAttribute("email",resultMap.get("email"));
+            session.setAttribute("verification",resultMap.get("verification"));
+            Date dd=new Date();
+            SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time=sim.format(dd);
+            session.setAttribute("verificationTime",time);
+            map.put("request","success");
+            map.put("msg","验证码发送成功");
+        }else {
+            System.out.println("验证码发送失败");
+            map.put("request","error");
+            map.put("msg","验证码发送失败");
+        }
+        return map;
+    }
+
+    /**
+     * 保存邮箱
+     * @param session
+     * @param userVerification
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/saveEmail")
+    public Map<String,Object>  saveEmail(HttpSession session,String userVerification) throws ParseException {
+        Map<String,Object> map = new HashMap<String,Object>();
+        String verification = (String) session.getAttribute("verification");//获取session中验证码
+        String time = (String) session.getAttribute("verificationTime");//获取发送验证码的时间
+        Date dd=new Date();
+        SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String newTime=sim.format(dd);//获取当前时间
+        if(verification == null){//如过断开连接
+            map.put("request","error");
+            map.put("msg","请先发送验证码");
+        }else{
+            Date d1 = sim.parse(newTime);
+            Date d2 = sim.parse(time);
+            long diff = d1.getTime() - d2.getTime();//这样得到的差值是毫秒级别
+            long s = diff / 1000;  //获取时间差
+            if(s < 10*30){    //判断是否超过10分钟
+                if(userVerification.toLowerCase().equals(verification.toLowerCase())){
+                    System.out.println("邮箱保存成功");
+                    map.put("request","success");
+                    map.put("msg","邮箱保存成功");
+                }else{
+                    map.put("request","error");
+                    map.put("msg","验证码错误");
+                }
+            }else {
+                map.put("request","error");
+                map.put("msg","验证码已过期，请重新获取");
             }
         }
         return map;

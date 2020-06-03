@@ -9,6 +9,7 @@ public class User {
     private Integer supplierId;//如果是供货商，绑定的id
     private Supplier supplier;
     private String iconName;//头像名
+    private String email;//邮箱
 
     @Override
     public String toString() {
@@ -37,7 +38,9 @@ public class User {
         this.iconName = iconName;
     }
 
-    private String email;//邮箱
+    public String getEmail() {
+        return email;
+    }
 
     public Integer getId() {
         return id;
