@@ -22,7 +22,7 @@ function selectImg() {
 }
 
 /**
- * 保存用户信息
+ * 保存用户头像
  */
 function saveUserInfo() {
 	var formData = new FormData();
@@ -37,6 +37,9 @@ function saveUserInfo() {
 		success: function(res){
 			if(res.result == "success"){
 				showInfoModel(res.msg);
+				setTimeout(function () {
+					location.reload(true);
+				},2000)
 			}else{
 				showInfoModel(res.msg);
 			}
@@ -46,30 +49,6 @@ function saveUserInfo() {
 	});
 }
 
-/**
- * 保存用户信息
- */
-function saveUserInfo() {
-	var formData = new FormData();
-	formData.append('file', $('#userIcon')[0].files[0]);
-	$.ajax({
-		url: '/user/iconUpload',
-		type: 'POST',
-		cache: false,
-		data: formData,
-		processData: false,
-		contentType: false,
-		success: function(res){
-			if(res.result == "success"){
-				showInfoModel(res.msg);
-			}else{
-				showInfoModel(res.msg);
-			}
-		},
-		error:function(res){
-		}
-	});
-}
 
 /**
  * 发送验证码
@@ -143,6 +122,7 @@ function saveUserEmail() {
  * 导航栏初始化
  */
 function setLoginInfo(){
+	console.log("初始化页面");
 	$.ajax({
 		url: url+"/login/getLoginUser",
 		type:"post",

@@ -164,6 +164,13 @@ public interface CommodityDao {
     public Integer getCommodityCount();
 
     /**
+     * 获取总共页数
+     * @return
+     */
+    @Select("SELECT COUNT(*) FROM commodity where supplierId=#{supplierId}")
+    public Integer getCommodityCountBySupplierId(Integer supplierId);
+
+    /**
      * 根据id删除数据
      * @param id
      */

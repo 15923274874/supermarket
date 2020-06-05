@@ -127,16 +127,16 @@ function postFrom(){
 		showInfoModel("请输入商品类型");
 		return;
 	}
-	if(fromData.personNo == ""){
-		showInfoModel("请输入负责人工号");
+	if(fromData.personNo == "" || !checkRate(fromData.personNo)){
+		showInfoModel("请输入正确的负责人工号");
 		return;
 	}
 	if(fromData.personName == ""){
-		showInfoModel("请选择负责人姓名");
+		showInfoModel("请输入负责人姓名");
 		return;
 	}
-	if(fromData.personPhone == ""){
-		showInfoModel("请选择负责人电话");
+	if(fromData.personPhone == "" || !checkRate(fromData.personPhone)){
+		showInfoModel("请输入正确的负责人电话");
 		return;
 	}
 	$.ajax({

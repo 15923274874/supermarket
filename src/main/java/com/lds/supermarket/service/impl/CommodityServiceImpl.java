@@ -22,7 +22,11 @@ public class CommodityServiceImpl implements CommodityService {
     public Page<Commodity> getAllCommodity(User user) {
 
         Page<Commodity> page = new Page<Commodity>();
-        page.setCountSum(commodityDao.getCommodityCount());//设置总记录条数
+        if(user.getJurisdiction() < 3){
+            page.setCountSum(commodityDao.getCommodityCount());//设置总记录条数
+        }else {
+            page.setCountSum(commodityDao.getCommodityCountBySupplierId(user.getSupplierId()));//设置总记录条数
+        }
         page.setNowPage(1);//设置当前页码
         page.setCountNum(page.getCountSum());//设置显示记录条数
         page.setPageSum();//设置总页码
@@ -39,7 +43,13 @@ public class CommodityServiceImpl implements CommodityService {
     public Page<Commodity> getAllCommodity(Integer nowPage, Integer size,User user) {
 
         Page<Commodity> page = new Page<Commodity>();
-        page.setCountSum(commodityDao.getCommodityCount());//设置总记录条数
+        if(user.getJurisdiction() < 3){
+            page.setCountSum(commodityDao.getCommodityCount());//设置总记录条数
+        }else {
+            page.setCountSum(commodityDao.getCommodityCountBySupplierId(user.getSupplierId()));//设置总记录条数
+        }
+
+
         page.setNowPage(nowPage);//设置当前页码
         page.setCountNum(size);//设置显示记录条数
         page.setPageSum();//设置总页码

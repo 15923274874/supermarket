@@ -19,7 +19,6 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         }else{
             return true;
         }
-//          return true;
     }
 
     @Override

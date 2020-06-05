@@ -99,19 +99,6 @@ document.writeln("                                    </ul>");
 document.writeln("                                </div>");
 document.writeln("                            </li>");
 
-document.writeln("                            <li class=\'nav-item \' data_jurisdiction=\'admini\' style=\'display: none\'>");
-document.writeln("                                <a class=\'nav-link active\' href=\'#\' data-toggle=\'collapse\' aria-expanded=\'false\' data-target=\'#submenu-4\' aria-controls=\'submenu-1\'><i class=\'fas fa-donate\'></i>资金管理 <span class=\'badge badge-success\'>6</span></a>");
-document.writeln("                                <div id=\'submenu-4\' class=\'collapse submenu\' style=\'\'>");
-document.writeln("                                    <ul class=\'nav flex-column\'>");
-document.writeln("                                        <li class=\'nav-item\'>");
-document.writeln("                                            <a class=\'nav-link\' href=\'pages/commodity.html\'></a>");
-document.writeln("                                        </li>");
-document.writeln("                                        <li class=\'nav-item\'>");
-document.writeln("                                            <a class=\'nav-link\' href=\'commodityType.html\'>资金信息</a>");
-document.writeln("                                        </li>");
-document.writeln("                                    </ul>");
-document.writeln("                                </div>");
-document.writeln("                            </li>");
 
 document.writeln("                            <li class=\'nav-item \' data_jurisdiction=\'admini\' style=\'display: none\'>");
 document.writeln("                                <a class=\'nav-link active\' href=\'#\' data-toggle=\'collapse\' aria-expanded=\'false\' data-target=\'#submenu-5\' aria-controls=\'submenu-1\'><i class=\'fas fa-user\'></i>用户管理 <span class=\'badge badge-success\'>6</span></a>");
